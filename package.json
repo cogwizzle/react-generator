@@ -1,0 +1,28 @@
+{
+  "name": "react-generator",
+  "version": "1.0.0",
+  "description": "Creating a React Plop file.",
+  "main": "plopfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfehrman/react-generator.git"
+  },
+  "keywords": [
+    "Generator",
+    "React",
+    "Plop",
+    "JavaScript"
+  ],
+  "author": "Joe Fehrman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jfehrman/react-generator/issues"
+  },
+  "homepage": "https://github.com/jfehrman/react-generator#readme",
+  "devDependencies": {
+    "plop": "^2.5.3"
+  }
+}
