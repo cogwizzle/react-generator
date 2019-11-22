@@ -1,0 +1,12 @@
+import React from 'react';
+import {{pascalCase name}} from '../{{snakeCase name}}';
+import renderer from 'react-test-renderer';
+
+it('Renders', () => {
+  const component = renderer.create(
+    <{{pascalCase name}} />
+  );
+  const results = component.toJSON();
+  expect(results).toMatchSnapshot();
+});
+
