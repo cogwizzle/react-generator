@@ -1,4 +1,18 @@
 module.exports = function(plop) {
+  function generateComponent(isTypescript, cwd) {
+    if (isTypescript)
+      return {
+        type: 'add',
+        path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.tsx`,
+        templateFile: 'plop-templates/component.tsx.hbs'
+      };
+    return {
+      type: 'add',
+      path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.js`,
+      templateFile: 'plop-templates/component.hbs'
+    };
+  }
+
   plop.setGenerator('component', {
     description: 'Create a functional react component',
     prompts: [
@@ -11,16 +25,17 @@ module.exports = function(plop) {
         type: 'confirm',
         name: 'isStorybook',
         message: 'Would you like to use storybook?'
+      },
+      {
+        type: 'confirm',
+        name: 'isTypescript',
+        message: 'Does your project use typescript?'
       }
     ],
     actions: function(data) {
       const cwd = process.cwd();
       let actions = [
-        {
-          type: 'add',
-          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.js`,
-          templateFile: 'plop-templates/component.hbs'
-        },
+        generateComponent(data.isTypescript, cwd),
         {
           type: 'add',
           path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.js`,
