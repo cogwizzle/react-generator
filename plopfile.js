@@ -1,16 +1,8 @@
 module.exports = function(plop) {
-  function generateComponent(isTypescript, cwd) {
+  function getJsFileExtension(isTypescript) {
     if (isTypescript)
-      return {
-        type: 'add',
-        path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.tsx`,
-        templateFile: 'plop-templates/component.tsx.hbs'
-      };
-    return {
-      type: 'add',
-      path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.js`,
-      templateFile: 'plop-templates/component.hbs'
-    };
+      return 'tsx';
+    return 'js';
   }
 
   plop.setGenerator('component', {
@@ -34,8 +26,13 @@ module.exports = function(plop) {
     ],
     actions: function(data) {
       const cwd = process.cwd();
+      const jsExt = getJsFileExtension(data.isTypescript);
       let actions = [
-        generateComponent(data.isTypescript, cwd),
+        {
+          type: 'add',
+          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
+          templateFile: 'plop-templates/component.hbs'
+        },
         {
           type: 'add',
           path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.js`,
