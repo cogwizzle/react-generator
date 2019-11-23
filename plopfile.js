@@ -7,6 +7,23 @@ module.exports = function(plop) {
     return 'js';
   }
 
+  function getStyleSheetExtension(styleType) {
+    const lowerStyleType = styleType.toLowerCase();
+
+    switch (lowerStyleType) {
+      case ('scss'):
+      case ('sass'):
+        return 'scss';
+        break;
+      case ('postcss'):
+      case ('post-css'):
+      case ('css'):
+      default:
+        return 'css';
+        break;
+    }
+  }
+
   plop.setGenerator('component', {
     description: 'Create a functional react component',
     prompts: [
@@ -29,12 +46,20 @@ module.exports = function(plop) {
         type: 'confirm',
         name: 'isJsx',
         message: 'Do you prefer to use the JSX file extension for React files?'
+      },
+      {
+        type: 'input',
+        name: 'styleType',
+        message: 'What kind of tech do you use for styling?'
       }
     ],
     actions: function(data) {
       const cwd = process.cwd();
       const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
-      let actions = [
+      const ssExt = getStyleSheetExtension(data.styleType);
+      data.styleSheetExtension = ssExt;
+
+      const actions = [
         {
           type: 'add',
           path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
@@ -47,7 +72,7 @@ module.exports = function(plop) {
         },
         {
           type: 'add',
-          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.css`,
+          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${ssExt}`,
           templateFile: 'plop-templates/component.css.hbs'
         }
       ];
