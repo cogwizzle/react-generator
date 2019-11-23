@@ -9,8 +9,8 @@ interface i{{pascalCase name}}Props {
 interface i{{pascalCase name}}State {
 
 }
-{{/isTypescript}}
 
+{{/isTypescript}}
 export default class {{pascalCase name}} extends Component{{#isTypescript}}<i{{pascalCase name}}Props, i{{pascalCase name}}State>{{/isTypescript}} {
   constructor(props{{#isTypescript}}: i{{pascalCase name}}Props{{/isTypescript}}) {
     super(props);
