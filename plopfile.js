@@ -1,7 +1,9 @@
 module.exports = function(plop) {
-  function getJsFileExtension(isTypescript) {
+  function getJsFileExtension(isTypescript, isJsx) {
     if (isTypescript)
       return 'tsx';
+    else if (isJsx)
+      return 'jsx';
     return 'js';
   }
 
@@ -22,11 +24,16 @@ module.exports = function(plop) {
         type: 'confirm',
         name: 'isTypescript',
         message: 'Does your project use typescript?'
+      },
+      {
+        type: 'confirm',
+        name: 'isJsx',
+        message: 'Do you prefer to use the JSX file extension for React files?'
       }
     ],
     actions: function(data) {
       const cwd = process.cwd();
-      const jsExt = getJsFileExtension(data.isTypescript);
+      const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
       let actions = [
         {
           type: 'add',
