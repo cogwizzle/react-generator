@@ -24,35 +24,42 @@ module.exports = function(plop) {
     }
   }
 
+  const componentPrompts = [
+    {
+      type: 'input',
+      name: 'name',
+      message: 'What is the name of the component?'
+    },
+    {
+      type: 'confirm',
+      name: 'isStorybook',
+      message: 'Would you like to use storybook?'
+    },
+    {
+      type: 'confirm',
+      name: 'isTypescript',
+      message: 'Does your project use typescript?'
+    },
+    {
+      type: 'confirm',
+      name: 'isJsx',
+      message: 'Do you prefer to use the JSX file extension for React files?'
+    },
+    {
+      type: 'input',
+      name: 'styleType',
+      message: 'What kind of tech do you use for styling?'
+    },
+    {
+      type: 'confirm',
+      name: 'isSemicolons',
+      message: 'Do you prefer to use semicolons?'
+    }
+  ];
+
   plop.setGenerator('component', {
     description: 'Create a functional react component',
-    prompts: [
-      {
-        type: 'input',
-        name: 'name',
-        message: 'What is the name of the component?'
-      },
-      {
-        type: 'confirm',
-        name: 'isStorybook',
-        message: 'Would you like to use storybook?'
-      },
-      {
-        type: 'confirm',
-        name: 'isTypescript',
-        message: 'Does your project use typescript?'
-      },
-      {
-        type: 'confirm',
-        name: 'isJsx',
-        message: 'Do you prefer to use the JSX file extension for React files?'
-      },
-      {
-        type: 'input',
-        name: 'styleType',
-        message: 'What kind of tech do you use for styling?'
-      }
-    ],
+    prompts: componentPrompts,
     actions: function(data) {
       const cwd = process.cwd();
       const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
@@ -98,6 +105,16 @@ module.exports = function(plop) {
             skipIfExists: true
           }
         ];
+      if (!data.isSemicolons)
+        actions = [
+          ...actions,
+          {
+            type: 'modify',
+            path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
+            pattern: /;\n/g,
+            template: '\n'
+          }
+        ];
 
       return actions;
     }
@@ -105,33 +122,7 @@ module.exports = function(plop) {
 
   plop.setGenerator('class component', {
     description: 'Create a class based react component',
-    prompts: [
-      {
-        type: 'input',
-        name: 'name',
-        message: 'What is the name of the component?'
-      },
-      {
-        type: 'confirm',
-        name: 'isStorybook',
-        message: 'Would you like to use storybook?'
-      },
-      {
-        type: 'confirm',
-        name: 'isTypescript',
-        message: 'Does your project use typescript?'
-      },
-      {
-        type: 'confirm',
-        name: 'isJsx',
-        message: 'Do you prefer to use the JSX file extension for React files?'
-      },
-      {
-        type: 'input',
-        name: 'styleType',
-        message: 'What kind of tech do you use for styling?'
-      }
-    ],
+    prompts: componentPrompts,
     actions: function(data) {
       const cwd = process.cwd();
       const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
@@ -175,6 +166,16 @@ module.exports = function(plop) {
             path: './.storybook/webpack.config.js',
             templateFile: 'plop-templates/storybook.webpack.hbs',
             skipIfExists: true
+          }
+        ];
+      if (!data.isSemicolons)
+        actions = [
+          ...actions,
+          {
+            type: 'modify',
+            path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
+            pattern: /;\n/g,
+            template: '\n'
           }
         ];
 
