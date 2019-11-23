@@ -1,6 +1,12 @@
 import{{#isTypescript}} * as{{/isTypescript}} React from 'react';
 import './{{snakeCase name}}.{{styleSheetExtension}}';
 
+{{#isTypescript}}
+interface i{{pascalCase name}}Props {
+
+}
+
+{{/isTypescript}}
 const {{pascalCase name}}{{#isTypescript}}: React.FunctionComponent<i{{pascalCase name}}Props>{{/isTypescript}} = () => {
   // State
 
