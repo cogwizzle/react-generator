@@ -1,0 +1,34 @@
+import{{#isTypescript}} * as{{/isTypescript}} React, { Component } from 'react';
+import './{{snakeCase name}}.{{styleSheetExtension}}';
+
+{{#isTypescript}}
+interface i{{pascalCase name}}Props {
+
+}
+
+interface i{{pascalCase name}}State {
+
+}
+{{/isTypescript}}
+
+export default class {{pascalCase name}} extends Component{{#isTypescript}}<i{{pascalCase name}}Props, i{{pascalCase name}}State>{{/isTypescript}} {
+  constructor(props{{#isTypescript}}: i{{pascalCase name}}Props{{/isTypescript}}) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className="{{snakeCase name}}">
+        New {{pascalCase name}} component.
+      </div>
+    );
+  }
+}
+
+{{#isTypescript}}
+export {
+  i{{pascalCase name}}Props,
+  i{{pascalCase name}}State,
+};
+
+{{/isTypescript}}

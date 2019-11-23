@@ -102,5 +102,84 @@ module.exports = function(plop) {
       return actions;
     }
   });
+
+  plop.setGenerator('class component', {
+    description: 'Create a class based react component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the component?'
+      },
+      {
+        type: 'confirm',
+        name: 'isStorybook',
+        message: 'Would you like to use storybook?'
+      },
+      {
+        type: 'confirm',
+        name: 'isTypescript',
+        message: 'Does your project use typescript?'
+      },
+      {
+        type: 'confirm',
+        name: 'isJsx',
+        message: 'Do you prefer to use the JSX file extension for React files?'
+      },
+      {
+        type: 'input',
+        name: 'styleType',
+        message: 'What kind of tech do you use for styling?'
+      }
+    ],
+    actions: function(data) {
+      const cwd = process.cwd();
+      const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
+      const ssExt = getStyleSheetExtension(data.styleType);
+      data.styleSheetExtension = ssExt;
+      data.isSass = (ssExt === 'scss');
+
+      let actions = [
+        {
+          type: 'add',
+          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
+          templateFile: 'plop-templates/component.class.hbs'
+        },
+        {
+          type: 'add',
+          path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.js`,
+          templateFile: 'plop-templates/component.test.hbs'
+        },
+        {
+          type: 'add',
+          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${ssExt}`,
+          templateFile: 'plop-templates/component.css.hbs'
+        }
+      ];
+      if (data.isStorybook)
+        actions = [
+          ...actions,
+          {
+            type: 'add',
+            path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.js`,
+            templateFile: 'plop-templates/component.story.hbs'
+          },
+          {
+            type: 'add',
+            path: './.storybook/config.js',
+            templateFile: 'plop-templates/storybook.config.hbs',
+            skipIfExists: true
+          },
+          {
+            type: 'add',
+            path: './.storybook/webpack.config.js',
+            templateFile: 'plop-templates/storybook.webpack.hbs',
+            skipIfExists: true
+          }
+        ];
+
+      return actions;
+    }
+  });
 };
 
