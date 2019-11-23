@@ -1,4 +1,10 @@
 module.exports = function(plop) {
+  function getJsFileExtension(isTypescript) {
+    if (isTypescript)
+      return 'tsx';
+    return 'js';
+  }
+
   plop.setGenerator('component', {
     description: 'Create a functional react component',
     prompts: [
@@ -11,14 +17,20 @@ module.exports = function(plop) {
         type: 'confirm',
         name: 'isStorybook',
         message: 'Would you like to use storybook?'
+      },
+      {
+        type: 'confirm',
+        name: 'isTypescript',
+        message: 'Does your project use typescript?'
       }
     ],
     actions: function(data) {
       const cwd = process.cwd();
+      const jsExt = getJsFileExtension(data.isTypescript);
       let actions = [
         {
           type: 'add',
-          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.js`,
+          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
           templateFile: 'plop-templates/component.hbs'
         },
         {

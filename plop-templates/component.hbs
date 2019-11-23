@@ -1,7 +1,7 @@
-import React from 'react';
+import{{#isTypescript}} * as{{/isTypescript}} React from 'react';
 import './{{snakeCase name}}.css';
 
-const {{pascalCase name}} = () => {
+const {{pascalCase name}}{{#isTypescript}}: React.FunctionComponent<i{{pascalCase name}}Props>{{/isTypescript}} = () => {
   // State
 
   // Effects
@@ -14,4 +14,7 @@ const {{pascalCase name}} = () => {
 };
 
 export default {{pascalCase name}};
+{{#isTypescript}}
+export { i{{pascalCase name}}Props };
+{{/isTypescript}}
 
