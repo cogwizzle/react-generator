@@ -5,6 +5,23 @@ module.exports = function(plop) {
     return 'js';
   }
 
+  function getStyleSheetExtension(styleType) {
+    const lowerStyleType = styleType.toLowerCase();
+
+    switch (lowerStyleType) {
+      case ('scss'):
+      case ('sass'):
+        return 'scss';
+        break;
+      case ('postcss'):
+      case ('post-css'):
+      case ('css'):
+      default:
+        return 'css';
+        break;
+    }
+  }
+
   plop.setGenerator('component', {
     description: 'Create a functional react component',
     prompts: [
@@ -22,11 +39,17 @@ module.exports = function(plop) {
         type: 'confirm',
         name: 'isTypescript',
         message: 'Does your project use typescript?'
+      },
+      {
+        type: 'input',
+        name: 'styleType',
+        message: 'What kind of tech do you use for styling?'
       }
     ],
     actions: function(data) {
       const cwd = process.cwd();
       const jsExt = getJsFileExtension(data.isTypescript);
+      const ssExt = getStyleSheetExtension(data.styleType);
       let actions = [
         {
           type: 'add',
@@ -40,7 +63,7 @@ module.exports = function(plop) {
         },
         {
           type: 'add',
-          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.css`,
+          path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${ssExt}`,
           templateFile: 'plop-templates/component.css.hbs'
         }
       ];
