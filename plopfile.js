@@ -57,7 +57,9 @@ module.exports = function(plop) {
       const cwd = process.cwd();
       const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
       const ssExt = getStyleSheetExtension(data.styleType);
-      let actions = [
+      data.styleSheetExtension = ssExt;
+
+      const actions = [
         {
           type: 'add',
           path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
