@@ -58,8 +58,9 @@ module.exports = function(plop) {
       const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
       const ssExt = getStyleSheetExtension(data.styleType);
       data.styleSheetExtension = ssExt;
+      data.isSass = (ssExt === 'scss');
 
-      const actions = [
+      let actions = [
         {
           type: 'add',
           path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
@@ -77,11 +78,26 @@ module.exports = function(plop) {
         }
       ];
       if (data.isStorybook)
-        actions.push({
-          type: 'add',
-          path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.js`,
-          templateFile: 'plop-templates/component.story.hbs'
-        });
+        actions = [
+          ...actions,
+          {
+            type: 'add',
+            path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.js`,
+            templateFile: 'plop-templates/component.story.hbs'
+          },
+          {
+            type: 'add',
+            path: './.storybook/config.js',
+            templateFile: 'plop-templates/storybook.config.hbs',
+            skipIfExists: true
+          },
+          {
+            type: 'add',
+            path: './.storybook/webpack.config.js',
+            templateFile: 'plop-templates/storybook.webpack.hbs',
+            skipIfExists: true
+          }
+        ];
 
       return actions;
     }

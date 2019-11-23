@@ -1,0 +1,18 @@
+const path = require("path");
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.{{styleSheetExtension}}$/,
+        loaders: [
+          {{#isSass}}"style-loader",{{/isSass}}
+          "css-loader"{{#isSass}},{{/isSass}}
+          {{#isSass}}"sass-loader"{{/isSass}}
+        ],
+        include: path.resolve(__dirname, "../")
+      }
+    ]
+  }
+};
+
