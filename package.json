@@ -2,9 +2,10 @@
   "name": "react-generator",
   "version": "1.0.0",
   "description": "Creating a React Plop file.",
-  "main": "plopfile.js",
+  "main": "dist/plopfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build/build.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/jfehrman/react-generator#readme",
   "devDependencies": {
+    "fs": "^0.0.1-security",
     "plop": "^2.5.3"
   }
 }
