@@ -133,7 +133,9 @@ module.exports = function(plop) {
     description: 'Create a class based react component',
     prompts: componentPrompts,
     actions: function(data) {
-      const cwd = process.cwd();
+      const [path, componentName] = extractPathAndComponentName(data.name);
+      data.name = componentName;
+      const cwd = `${process.cwd()}/${path}`;
       const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
       const ssExt = getStyleSheetExtension(data.styleType);
       data.styleSheetExtension = ssExt;
