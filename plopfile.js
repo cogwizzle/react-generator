@@ -26,9 +26,18 @@ module.exports = function(plop) {
 
   function extractPathAndComponentName(componentName) {
     if (componentName.indexOf('/') > -1) {
-      return componentName.split('/', -1);
+      let [path, name] = componentName.split('/', -1);
+      return [generatePathWithPrefix(path), name];
     }
-    return ['', componentName];
+    return [generatePathWithPrefix(''), componentName];
+  }
+
+  function generatePathWithPrefix(path) {
+    if(process.cwd().indexOf('src/components') < 0 
+      && path.indexOf('src/components') < 0) {
+      return `src/components/${path}`;
+    }
+    return path;
   }
 
   const componentPrompts = [
