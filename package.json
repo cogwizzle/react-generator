@@ -1,6 +1,6 @@
 {
   "name": "react-generator",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Creating a React Plop file.",
   "main": "dist/plopfile.js",
   "scripts": {
@@ -23,7 +23,10 @@
     "url": "https://github.com/jfehrman/react-generator/issues"
   },
   "homepage": "https://github.com/jfehrman/react-generator#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "peerDependencies": {},
+  "dependencies": {
+    "app-root-path": "^3.0.0",
     "fs": "^0.0.1-security",
     "plop": "^2.5.3"
   }
