@@ -179,7 +179,7 @@ module.exports = function(plop) {
           ...actions,
           {
             type: 'add',
-            path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.js`,
+            path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.${jsExt}`,
             templateFile: 'plop-templates/component.test.hbs'
           }
         ];
@@ -269,7 +269,7 @@ module.exports = function(plop) {
           ...actions,
           {
             type: 'add',
-            path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.js`,
+            path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.${jsExt}`,
             templateFile: 'plop-templates/component.test.hbs'
           }
         ];

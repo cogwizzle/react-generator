@@ -1,6 +1,6 @@
-import React from 'react';
+import {{#isTypescript}}* as {{/isTypescript}}React from 'react';
 import {{pascalCase name}} from '../{{snakeCase name}}';
-import renderer from 'react-test-renderer';
+import {{#isTypescript}}* as {{/isTypescript}}renderer from 'react-test-renderer';
 
 it('Renders', () => {
   const component = renderer.create(
