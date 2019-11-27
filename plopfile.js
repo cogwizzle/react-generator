@@ -1,3 +1,55 @@
+const fs = require('fs');
+const appRoot = require('app-root-path');
+
+const loadPackages = () => {
+  let Package = null;
+  try{
+    Package = JSON.parse(fs.readFileSync(`${appRoot.path}/package.json`, 'utf8'));
+    return Package;
+  } catch (e) {
+    throw new Error('You must have a package.json file initialized.' + e);
+  }
+};
+
+const loadReactPreferences = () => {
+  let reactPreferences = null;
+  try {
+    return JSON.parse(fs.readFileSync(`${appRoot.path}/react.preferences.json`, 'utf8'));
+  } catch (e) {
+    return null;
+  }
+};
+
+const Package = loadPackages();
+const reactPreferences = loadReactPreferences();
+
+const {
+  devDependencies,
+  dependencies
+} = Package;
+const allPackages = {
+  ...devDependencies,
+  ...dependencies
+};
+
+const checkIsTypescript = dependencies => 
+  Object.keys(dependencies)
+    .some(dependency => dependency === 'typescript');
+;
+
+const checkIsStorybook = dependencies =>
+  Object.keys(dependencies)
+    .some(dependency => dependency === '@storybook/cli');
+
+const checkIsSass = dependencies =>
+  Object.keys(dependencies)
+    .some(dependency => dependency === 'node-sass');
+
+const checkIsJestInstalled = dependencies =>
+  Object.keys(dependencies)
+    .some(dependency => dependency === 'jest');
+
+
 module.exports = function(plop) {
   function getJsFileExtension(isTypescript, isJsx) {
     if (isTypescript)
@@ -40,38 +92,54 @@ module.exports = function(plop) {
     return path;
   }
 
-  const componentPrompts = [
-    {
-      type: 'input',
-      name: 'name',
-      message: 'What is the name of the component?'
-    },
-    {
-      type: 'confirm',
-      name: 'isStorybook',
-      message: 'Would you like to use storybook?'
-    },
-    {
-      type: 'confirm',
-      name: 'isTypescript',
-      message: 'Does your project use typescript?'
-    },
-    {
-      type: 'confirm',
-      name: 'isJsx',
-      message: 'Do you prefer to use the JSX file extension for React files?'
-    },
-    {
-      type: 'input',
-      name: 'styleType',
-      message: 'What kind of tech do you use for styling?'
-    },
-    {
-      type: 'confirm',
-      name: 'isSemicolons',
-      message: 'Do you prefer to use semicolons?'
-    }
-  ];
+  const componentPrompts = (reactPreferences)
+    ? [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the component?'
+      }
+    ]
+    : (checkIsTypescript(allPackages))
+      ? [
+        {
+          type: 'input',
+          name: 'name',
+          message: 'What is the name of the component?'
+        },
+        {
+          type: 'confirm',
+          name: 'isSemicolons',
+          message: 'Do you prefer to use semicolons?'
+        },
+        {
+          type: 'confirm',
+          name: 'isSavePref',
+          message: 'Would you like to save these preferences?'
+        }
+      ]
+      : [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the component?'
+      },
+      {
+        type: 'confirm',
+        name: 'isJsx',
+        message: 'Do you prefer to use the JSX file extension for React files?',
+      },
+      {
+        type: 'confirm',
+        name: 'isSemicolons',
+        message: 'Do you prefer to use semicolons?'
+      },
+      {
+        type: 'confirm',
+        name: 'isSavePref',
+        message: 'Would you like to save these preferences?'
+      }
+    ];
 
   plop.setGenerator('component', {
     description: 'Create a functional react component',
@@ -79,6 +147,15 @@ module.exports = function(plop) {
     actions: function(data) {
       const [path, componentName] = extractPathAndComponentName(data.name);
       data.name = componentName;
+      data.isTypescript = checkIsTypescript(allPackages);
+      data.styleType = checkIsSass(allPackages) ? 'sass' : 'css';
+      data.isStorybook = checkIsStorybook(allPackages);
+      if (reactPreferences) {
+        const { isJsx, isSemicolons } = reactPreferences;
+        data.isJsx = isJsx;
+        data.isSemicolons = isSemicolons;
+        data.isSavePref = false;
+      }
       const cwd = `${process.cwd()}/${path}`;
       const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
       const ssExt = getStyleSheetExtension(data.styleType);
@@ -93,15 +170,19 @@ module.exports = function(plop) {
         },
         {
           type: 'add',
-          path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.js`,
-          templateFile: 'plop-templates/component.test.hbs'
-        },
-        {
-          type: 'add',
           path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${ssExt}`,
           templateFile: 'plop-templates/component.css.hbs'
-        }
+        },
       ];
+      if (checkIsJestInstalled(allPackages))
+        actions = [
+          ...actions,
+          {
+            type: 'add',
+            path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.js`,
+            templateFile: 'plop-templates/component.test.hbs'
+          }
+        ];
       if (data.isStorybook)
         actions = [
           ...actions,
@@ -133,6 +214,18 @@ module.exports = function(plop) {
             template: '\n'
           }
         ];
+      if (data.isSavePref)
+        actions = [
+          ...actions,
+          {
+            type: 'add',
+            path: './react.preferences.json',
+            template: JSON.stringify({
+              isSemicolons: data.isSemicolons,
+              isJsx: data.isJsx
+            }, null, 2)
+          }
+        ];
 
       return actions;
     }
@@ -144,6 +237,15 @@ module.exports = function(plop) {
     actions: function(data) {
       const [path, componentName] = extractPathAndComponentName(data.name);
       data.name = componentName;
+      data.isTypescript = checkIsTypescript(allPackages);
+      data.styleType = checkIsSass(allPackages) ? 'sass' : 'css';
+      data.isStorybook = checkIsStorybook(allPackages);
+      if (reactPreferences) {
+        const { isJsx, isSemicolons } = reactPreferences;
+        data.isJsx = isJsx;
+        data.isSemicolons = isSemicolons;
+        data.isSavePref = false;
+      }
       const cwd = `${process.cwd()}/${path}`;
       const jsExt = getJsFileExtension(data.isTypescript, data.isJsx);
       const ssExt = getStyleSheetExtension(data.styleType);
@@ -158,15 +260,19 @@ module.exports = function(plop) {
         },
         {
           type: 'add',
-          path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.js`,
-          templateFile: 'plop-templates/component.test.hbs'
-        },
-        {
-          type: 'add',
           path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${ssExt}`,
           templateFile: 'plop-templates/component.css.hbs'
         }
       ];
+      if (checkIsJestInstalled(allPackages))
+        actions = [
+          ...actions,
+          {
+            type: 'add',
+            path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.js`,
+            templateFile: 'plop-templates/component.test.hbs'
+          }
+        ];
       if (data.isStorybook)
         actions = [
           ...actions,
@@ -196,6 +302,18 @@ module.exports = function(plop) {
             path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
             pattern: /;\n/g,
             template: '\n'
+          }
+        ];
+      if (data.isSavePref)
+        actions = [
+          ...actions,
+          {
+            type: 'add',
+            path: './react.preferences.json',
+            template: JSON.stringify({
+              isSemicolons: data.isSemicolons,
+              isJsx: data.isJsx
+            }, null, 2)
           }
         ];
 
