@@ -1,10 +1,18 @@
 const fs = require('fs');
 const appRoot = require('app-root-path');
 
+const classComponentTemplate = require('./plop-templates/component.class.hbs')();
+const componentStyleTemplate = require('./plop-templates/component.css.hbs')();
+const componentTempalte = require('./plop-templates/component.hbs')();
+const componentStoryTemplate = require('./plop-templates/component.story.hbs')();
+const componentTestTemplate = require('./plop-templates/component.test.hbs')();
+const storybookConfigTemplate = require('./plop-templates/storybook.config.hbs')();
+const storybookWebpackConfigTemplate = require('./plop-templates/storybook.webpack.hbs')();
+
 const loadPackages = () => {
   let Package = null;
   try{
-    Package = JSON.parse(fs.readFileSync(`${appRoot.path}/package.json`, 'utf8'));
+    Package = JSON.parse(fs.readFileSync(`./package.json`, 'utf8'));
     return Package;
   } catch (e) {
     throw new Error('You must have a package.json file initialized.' + e);
@@ -166,12 +174,12 @@ module.exports = function(plop) {
         {
           type: 'add',
           path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
-          templateFile: 'plop-templates/component.hbs'
+          template: componentTempalte
         },
         {
           type: 'add',
           path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${ssExt}`,
-          templateFile: 'plop-templates/component.css.hbs'
+          template: componentStyleTemplate
         },
       ];
       if (checkIsJestInstalled(allPackages))
@@ -180,7 +188,7 @@ module.exports = function(plop) {
           {
             type: 'add',
             path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.${jsExt}`,
-            templateFile: 'plop-templates/component.test.hbs'
+            template: componentTestTemplate
           }
         ];
       if (data.isStorybook)
@@ -189,19 +197,19 @@ module.exports = function(plop) {
           {
             type: 'add',
             path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.js`,
-            templateFile: 'plop-templates/component.story.hbs'
+            template: componentStoryTemplate
           },
           {
             type: 'add',
             path: './.storybook/config.js',
             templateFile: 'plop-templates/storybook.config.hbs',
-            skipIfExists: true
+            template: storybookConfigTemplate
           },
           {
             type: 'add',
             path: './.storybook/webpack.config.js',
             templateFile: 'plop-templates/storybook.webpack.hbs',
-            skipIfExists: true
+            template: storybookWebpackConfigTemplate
           }
         ];
       if (!data.isSemicolons)
@@ -256,12 +264,12 @@ module.exports = function(plop) {
         {
           type: 'add',
           path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
-          templateFile: 'plop-templates/component.class.hbs'
+          template: classComponentTemplate
         },
         {
           type: 'add',
           path: `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${ssExt}`,
-          templateFile: 'plop-templates/component.css.hbs'
+          template: componentStyleTemplate
         }
       ];
       if (checkIsJestInstalled(allPackages))
@@ -270,7 +278,7 @@ module.exports = function(plop) {
           {
             type: 'add',
             path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.${jsExt}`,
-            templateFile: 'plop-templates/component.test.hbs'
+            template: componentTestTemplate
           }
         ];
       if (data.isStorybook)
@@ -279,18 +287,18 @@ module.exports = function(plop) {
           {
             type: 'add',
             path: `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.js`,
-            templateFile: 'plop-templates/component.story.hbs'
+            template: componentStoryTemplate
           },
           {
             type: 'add',
             path: './.storybook/config.js',
-            templateFile: 'plop-templates/storybook.config.hbs',
+            template: storybookConfigTemplate,
             skipIfExists: true
           },
           {
             type: 'add',
             path: './.storybook/webpack.config.js',
-            templateFile: 'plop-templates/storybook.webpack.hbs',
+            template: storybookWebpackConfigTemplate,
             skipIfExists: true
           }
         ];
