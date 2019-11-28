@@ -22,7 +22,7 @@ const generateComponentActions = (
   const actions = generateBaseFiles(cwd, jsExt, ssExt, type);
   addTestFiles(actions, cwd, isJest, isStorybook);
   addOtherPreferences(actions, cwd, jsExt, isSemicolons);
-  addSavePreferences(actions, isSavePref);
+  addSavePreferences(actions, isSemicolons, (jsExt === 'jsx'), isSavePref);
   return actions;
 };
 
@@ -84,14 +84,14 @@ const addOtherPreferences = (actions, cwd, jsExt, isSemicolons) => {
     );
 };
 
-const addSavePreferences = (actions, isSavePref) => {
+const addSavePreferences = (actions, isSemicolons, isJsx, isSavePref) => {
   isSavePref &&
     actions.push(
       addAction(
         `${appRoot.path}/react.preferences.json`,
         JSON.stringify({
-          isSemicolons: data.isSemicolons,
-          isJsx: data.isJsx
+          isSemicolons,
+          isJsx,
         }, null, 2)
       )
     );
