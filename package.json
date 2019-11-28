@@ -1,11 +1,12 @@
 {
   "name": "react-generator",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Creating a React Plop file.",
   "main": "dist/plopfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build/build.js"
+    "build": "webpack",
+    "plop": "plop --plopfile dist/plopfile.js"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,12 @@
     "url": "https://github.com/jfehrman/react-generator/issues"
   },
   "homepage": "https://github.com/jfehrman/react-generator#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "es6-template-string-loader": "^2.0.0",
+    "template-string-loader": "^0.0.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
   "peerDependencies": {},
   "dependencies": {
     "app-root-path": "^3.0.0",
