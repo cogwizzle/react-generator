@@ -1,7 +1,5 @@
 const fs = require('fs');
 
-let settings = null;
-
 const loadPackages = () => {
   let Package = null;
   try{
@@ -39,32 +37,27 @@ const checkIsJestInstalled = dependencies =>
 ;
 
 const loadSettings = (data = {}) => {
-  if (!settings) {
-    const pkg = loadPackages();
-    const reactPreferences = loadReactPreferences();
-    const {
-      devDependencies,
-      dependencies
-    } = pkg;
-    const allPackages = {
-      ...devDependencies,
-      ...dependencies
-    };
+  const pkg = loadPackages();
+  const reactPreferences = loadReactPreferences();
+  const {
+    devDependencies,
+    dependencies
+  } = pkg;
+  const allPackages = {
+    ...devDependencies,
+    ...dependencies
+  };
 
-    data.isTypescript = checkIsTypescript(allPackages);
-    data.isStorybook = checkIsStorybook(allPackages);
-    data.isSass = checkIsSass(allPackages);
-    data.isJest = checkIsJestInstalled(allPackages);
-    if (reactPreferences) {
-      data.isJsx = reactPreferences.isJsx || false;
-      data.isSemicolons = reactPreferences.isSemicolons;
-      data.isSavePref = false;
-    }
-    settings = data;
-    return data;
-  } else {
-    return settings;
+  data.isTypescript = checkIsTypescript(allPackages);
+  data.isStorybook = checkIsStorybook(allPackages);
+  data.isSass = checkIsSass(allPackages);
+  data.isJest = checkIsJestInstalled(allPackages);
+  if (reactPreferences) {
+    data.isJsx = reactPreferences.isJsx || false;
+    data.isSemicolons = reactPreferences.isSemicolons;
+    data.isSavePref = false;
   }
+  return data;
 };
 
 module.exports = {

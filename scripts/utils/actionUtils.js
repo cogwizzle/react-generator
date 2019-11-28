@@ -19,8 +19,18 @@ const generateComponentActions = (
   isSemicolons,
   isSavePref,
 ) => {
+  console.log(
+    type,
+    cwd,
+    jsExt,
+    ssExt,
+    isJest,
+    isStorybook,
+    isSemicolons,
+    isSavePref,
+  );
   const actions = generateBaseFiles(cwd, jsExt, ssExt, type);
-  addTestFiles(actions, cwd, isJest, isStorybook);
+  addTestFiles(actions, cwd, isJest, isStorybook, jsExt);
   addOtherPreferences(actions, cwd, jsExt, isSemicolons);
   addSavePreferences(actions, isSemicolons, (jsExt === 'jsx'), isSavePref);
   return actions;
@@ -41,7 +51,7 @@ const generateBaseFiles = (cwd, jsExt, ssExt, type) => {
   ];
 }
 
-const addTestFiles = (actions, cwd, isJest, isStorybook) => {
+const addTestFiles = (actions, cwd, isJest, isStorybook, jsExt) => {
   isJest && 
     actions.push(
       addAction(
