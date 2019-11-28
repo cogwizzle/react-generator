@@ -19,16 +19,6 @@ const generateComponentActions = (
   isSemicolons,
   isSavePref,
 ) => {
-  console.log(
-    type,
-    cwd,
-    jsExt,
-    ssExt,
-    isJest,
-    isStorybook,
-    isSemicolons,
-    isSavePref,
-  );
   const actions = generateBaseFiles(cwd, jsExt, ssExt, type);
   addTestFiles(actions, cwd, isJest, isStorybook, jsExt);
   addOtherPreferences(actions, cwd, jsExt, isSemicolons);
