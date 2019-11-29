@@ -25,7 +25,7 @@ const checkIsTypescript = dependencies =>
 
 const checkIsPostcss = dependencies =>
   Object.keys(dependencies)
-    .some(dependencies => dependency === 'postcss');
+    .some(dependency => dependency === 'postcss');
 
 const checkIsStorybook = dependencies =>
   Object.keys(dependencies)
