@@ -1,18 +1,24 @@
 const path = require("path");
 
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.{{styleSheetExtension}}$/,
-        loaders: [
-          {{#isSass}}"style-loader",{{/isSass}}
-          "css-loader"{{#isSass}},{{/isSass}}
-          {{#isSass}}"sass-loader"{{/isSass}}
-        ],
-        include: path.resolve(__dirname, "../")
-      }
-    ]
-  }
+module.exports = ({ config, mode }) => {
+  config.module.rules.push({
+    test: /\.s?css$/,
+    loaders: [
+      {{#isSass}}"style-loader",{{/isSass}}
+      "css-loader"{{#isSass}},{{/isSass}}
+      {{#isSass}}"sass-loader"{{/isSass}}
+    ],
+  });
+{{#isTypescript}}  config.module.rules.push('ts-loader');{{/isTypescript}}
+  config.module.rules.push({
+    loader: 'babel-loader',
+    options: {
+      presets: [{{#isTypescript}}
+        ['@babel/preset-typescript', { allExtensions: true, isTSX: true }],{{/isTypescript}}
+        '@babel/preset-react',
+        '@babel/preset-env',
+      ],
+    }
+  });
 };
 
