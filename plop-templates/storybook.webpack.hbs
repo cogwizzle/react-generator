@@ -1,24 +1,48 @@
 const path = require("path");
 
-module.exports = ({ config, mode }) => {
-  config.module.rules.push({
-    test: /\.s?css$/,
-    loaders: [
-      {{#isSass}}"style-loader",{{/isSass}}
-      "css-loader"{{#isSass}},{{/isSass}}
-      {{#isSass}}"sass-loader"{{/isSass}}
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.[t|j]sx$/,
+        use: [{{#isTypescript}}
+          'ts-loader',{{/isTypescript}}
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [{{#isTypescript}}
+                ['@babel/preset-typescript', { allExtensions:true, isTSX: true }],{{/isTypescript}}
+                '@babel/preset-react',
+                '@babel/preset-env',
+              ],
+            }
+          },
+          'source-map-loader',
+        ],
+        exclude: [
+          /node_modules/,
+          path.resolve(__dirname, '.storybook')
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',{{#isSass}}
+          'sass-loader,{{/isSass}}{{#isPostcss}}
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                require('tailwindcss'),
+                require('autoprefixer'),
+              ],
+            },
+          },{{/isPostcss}}
+        ],
+      },
     ],
-  });
-{{#isTypescript}}  config.module.rules.push('ts-loader');{{/isTypescript}}
-  config.module.rules.push({
-    loader: 'babel-loader',
-    options: {
-      presets: [{{#isTypescript}}
-        ['@babel/preset-typescript', { allExtensions: true, isTSX: true }],{{/isTypescript}}
-        '@babel/preset-react',
-        '@babel/preset-env',
-      ],
-    }
-  });
+  }
 };
 
