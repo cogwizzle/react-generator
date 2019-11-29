@@ -53,7 +53,7 @@ const addTestFiles = (actions, cwd, isJest, isStorybook, jsExt) => {
     actions.push(
       addAction(
         `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.js`,
-        componentTestTemplate,
+        componentStoryTemplate,
       )
     );
     actions.push(
