@@ -3,7 +3,7 @@ const path = require("path");
 
 module.exports = ({ config, mode }) => {
   // Excluding existing CSS rules in the default storybook webpack config.
-  const isTestToBeExcluded = (test) => (test.source == '\\.css$' || test.source == '\\.module\\.css$');
+  const isTestToBeExcluded = (test) => (test.source == '\\\\.css$' || test.source == '\\\\.module\\\\.css$');
   const excludedTest = config.module.rules.filter(({ test }) => isTestToBeExcluded(test));
   config.module.rules = config.module.rules.filter(({ test }) => !isTestToBeExcluded(test));
 
