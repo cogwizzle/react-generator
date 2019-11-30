@@ -23,6 +23,10 @@ const checkIsTypescript = dependencies =>
   Object.keys(dependencies)
     .some(dependency => dependency === 'typescript');
 
+const checkIsPostcss = dependencies =>
+  Object.keys(dependencies)
+    .some(dependency => dependency === 'postcss');
+
 const checkIsStorybook = dependencies =>
   Object.keys(dependencies)
     .some(dependency => dependency === '@storybook/cli');
@@ -49,6 +53,7 @@ const loadSettings = (data = {}) => {
   };
 
   data.isTypescript = checkIsTypescript(allPackages);
+  data.isPostcss = checkIsPostcss(allPackages);
   data.isStorybook = checkIsStorybook(allPackages);
   data.isSass = checkIsSass(allPackages);
   data.isJest = checkIsJestInstalled(allPackages);
