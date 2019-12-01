@@ -59,7 +59,7 @@ const addTestFiles = (actions, cwd, isJest, isStorybook, jsExt, isSemicolons) =>
     if (!isSemicolons) {
       actions.push(
         modifyAction(
-          `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.js`,
+          `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.${jsExt}`,
           /;\n/g,
           '\n',
         ),
@@ -69,7 +69,7 @@ const addTestFiles = (actions, cwd, isJest, isStorybook, jsExt, isSemicolons) =>
   if (isStorybook) {
     actions.push(
       addAction(
-        `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.js`,
+        `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.${jsExt}`,
         componentStoryTemplate,
       ),
     )
@@ -90,7 +90,7 @@ const addTestFiles = (actions, cwd, isJest, isStorybook, jsExt, isSemicolons) =>
     if (!isSemicolons) {
       actions.push(
         modifyAction(
-          `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.js`,
+          `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.${jsExt}`,
           /;\n/g,
           '\n',
         ),
