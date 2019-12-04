@@ -50,53 +50,54 @@ const generateBaseFiles = (cwd, jsExt, ssExt, type, isSemicolons) => {
 }
 
 const generateTestFiles = (cwd, isJest, isStorybook, jsExt, isSemicolons) => {
-  const actions = []
+  let actions = []
   if (isJest) {
-    actions.push(
+    actions = [
+      ...actions,
       addAction(
         `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.${jsExt}`,
         componentTestTemplate,
       ),
-    )
+    ]
+
     if (!isSemicolons) {
-      actions.push(
+      actions = [
+        ...actions,
         modifyAction(
           `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.${jsExt}`,
           /;\n/g,
           '\n',
         ),
-      )
+      ]
     }
   }
   if (isStorybook) {
-    actions.push(
+    actions = [
+      ...actions,
       addAction(
         `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.${jsExt}`,
         componentStoryTemplate,
       ),
-    )
-    actions.push(
       addAction(
         `${appRoot.path}/.storybook/config.js`,
         storybookConfigTemplate,
         true,
       ),
-    )
-    actions.push(
       addAction(
         `${appRoot.path}/.storybook/webpack.config.js`,
         storybookWebpackConfigTemplate,
         true,
       ),
-    )
+    ]
     if (!isSemicolons) {
-      actions.push(
+      actions = [
+        ...actions,
         modifyAction(
           `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.${jsExt}`,
           /;\n/g,
           '\n',
         ),
-      )
+      ]
     }
   }
   return actions

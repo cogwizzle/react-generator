@@ -40,3 +40,101 @@ Array [
   },
 ]
 `;
+
+exports[`generateComponentActions 1`] = `
+Array [
+  Object {
+    "path": "./{{snakeCase name}}/{{snakeCase name}}.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "./{{snakeCase name}}/{{snakeCase name}}.css",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "./{{snakeCase name}}/{{snakeCase name}}.js",
+    "pattern": /;\\\\n/g,
+    "template": "
+",
+    "type": "modify",
+  },
+]
+`;
+
+exports[`generateTestFiles 1`] = `Array []`;
+
+exports[`generateTestFiles with jest, storybook, and no semicolons 1`] = `
+Array [
+  Object {
+    "path": "./{{snakeCase name}}/__test__/{{snakeCase name}}.test.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "./{{snakeCase name}}/__test__/{{snakeCase name}}.test.js",
+    "pattern": /;\\\\n/g,
+    "template": "
+",
+    "type": "modify",
+  },
+  Object {
+    "path": "./{{snakeCase name}}/__test__/{{snakeCase name}}.story.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/.storybook/config.js",
+    "skipIfExists": true,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/.storybook/webpack.config.js",
+    "skipIfExists": true,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "./{{snakeCase name}}/__test__/{{snakeCase name}}.story.js",
+    "pattern": /;\\\\n/g,
+    "template": "
+",
+    "type": "modify",
+  },
+]
+`;
+
+exports[`generateTestFiles with jest, storybook, and semicolons 1`] = `
+Array [
+  Object {
+    "path": "./{{snakeCase name}}/__test__/{{snakeCase name}}.test.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "./{{snakeCase name}}/__test__/{{snakeCase name}}.story.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/.storybook/config.js",
+    "skipIfExists": true,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/.storybook/webpack.config.js",
+    "skipIfExists": true,
+    "template": undefined,
+    "type": "add",
+  },
+]
+`;
