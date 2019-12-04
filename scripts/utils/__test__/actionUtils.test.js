@@ -1,6 +1,7 @@
 const {
   addAction,
   modifyAction,
+  generateBaseFiles,
 } = require('../actionUtils')
 
 it('addAction', () => {
@@ -31,5 +32,15 @@ it('modifyAction', () => {
     pattern: /\n/,
     template: ';',
   })
+})
+
+it('generateBaseFiles', () => {
+  const results = generateBaseFiles('.', 'js', 'css', 'component', false)
+  expect(results).toMatchSnapshot()
+})
+
+it('generateBaseFiles with class component and semicolons', () => {
+  const results = generateBaseFiles('.', 'js', 'css', 'class component', true)
+  expect(results).toMatchSnapshot()
 })
 

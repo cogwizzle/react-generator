@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateBaseFiles 1`] = `
+Array [
+  Object {
+    "path": "./{{snakeCase name}}/{{snakeCase name}}.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "./{{snakeCase name}}/{{snakeCase name}}.css",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "./{{snakeCase name}}/{{snakeCase name}}.js",
+    "pattern": /;\\\\n/g,
+    "template": "
+",
+    "type": "modify",
+  },
+]
+`;
+
+exports[`generateBaseFiles with class component and semicolons 1`] = `
+Array [
+  Object {
+    "path": "./{{snakeCase name}}/{{snakeCase name}}.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "./{{snakeCase name}}/{{snakeCase name}}.css",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+]
+`;

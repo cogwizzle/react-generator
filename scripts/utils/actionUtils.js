@@ -24,7 +24,7 @@ const modifyAction = (path, pattern, template) => ({
 })
 
 const generateBaseFiles = (cwd, jsExt, ssExt, type, isSemicolons) => {
-  const actions = [
+  let actions = [
     addAction(
       `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
       (type === 'component')
@@ -37,18 +37,20 @@ const generateBaseFiles = (cwd, jsExt, ssExt, type, isSemicolons) => {
     ),
   ]
   if (!isSemicolons) {
-    actions.push(
+    actions = [
+      ...actions,
       modifyAction(
         `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
         /;\n/g,
         '\n',
       ),
-    )
+    ]
   }
   return actions
 }
 
-const addTestFiles = (actions, cwd, isJest, isStorybook, jsExt, isSemicolons) => {
+const generateTestFiles = (cwd, isJest, isStorybook, jsExt, isSemicolons) => {
+  const actions = []
   if (isJest) {
     actions.push(
       addAction(
@@ -97,6 +99,7 @@ const addTestFiles = (actions, cwd, isJest, isStorybook, jsExt, isSemicolons) =>
       )
     }
   }
+  return actions
 }
 
 const generateComponentActions = (
@@ -108,15 +111,17 @@ const generateComponentActions = (
   isStorybook,
   isSemicolons,
 ) => {
-  const actions = generateBaseFiles(cwd, jsExt, ssExt, type, isSemicolons)
-  addTestFiles(actions, cwd, isJest, isStorybook, jsExt, isSemicolons)
+  const actions = [
+    ...generateBaseFiles(cwd, jsExt, ssExt, type, isSemicolons),
+    ...generateTestFiles(cwd, isJest, isStorybook, jsExt, isSemicolons),
+  ]
   return actions
 }
 
 module.exports = {
   generateComponentActions,
   generateBaseFiles,
-  addTestFiles,
+  generateTestFiles,
   addAction,
   modifyAction,
 }
