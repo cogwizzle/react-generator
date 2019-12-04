@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   entry: './plopfile.js',
@@ -21,7 +21,7 @@ module.exports = {
                 '@babel/preset-react',
                 '@babel/preset-env',
               ],
-            }
+            },
           },
         ],
         exclude: /node_modules/,
@@ -30,18 +30,19 @@ module.exports = {
         test: /\.hbs$/,
         use: [
           {
-            loader: 'template-string-loader',
-          }
-        ]
-      }
+            loader: 'raw-loader',
+          },
+        ],
+      },
     ],
   },
   resolve: {
-    extensions: [ '.js' ],
+    extensions: ['.js'],
   },
   output: {
     filename: 'plopfile.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs2',
   },
-};
+}
+

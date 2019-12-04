@@ -24,7 +24,7 @@ const modifyAction = (path, pattern, template) => ({
 })
 
 const generateBaseFiles = (cwd, jsExt, ssExt, type, isSemicolons) => {
-  const actions = [
+  let actions = [
     addAction(
       `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
       (type === 'component')
@@ -37,66 +37,70 @@ const generateBaseFiles = (cwd, jsExt, ssExt, type, isSemicolons) => {
     ),
   ]
   if (!isSemicolons) {
-    actions.push(
+    actions = [
+      ...actions,
       modifyAction(
         `${cwd}/{{snakeCase name}}/{{snakeCase name}}.${jsExt}`,
         /;\n/g,
         '\n',
       ),
-    )
+    ]
   }
   return actions
 }
 
-const addTestFiles = (actions, cwd, isJest, isStorybook, jsExt, isSemicolons) => {
+const generateTestFiles = (cwd, isJest, isStorybook, jsExt, isSemicolons) => {
+  let actions = []
   if (isJest) {
-    actions.push(
+    actions = [
+      ...actions,
       addAction(
         `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.${jsExt}`,
         componentTestTemplate,
       ),
-    )
+    ]
+
     if (!isSemicolons) {
-      actions.push(
+      actions = [
+        ...actions,
         modifyAction(
           `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.test.${jsExt}`,
           /;\n/g,
           '\n',
         ),
-      )
+      ]
     }
   }
   if (isStorybook) {
-    actions.push(
+    actions = [
+      ...actions,
       addAction(
         `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.${jsExt}`,
         componentStoryTemplate,
       ),
-    )
-    actions.push(
       addAction(
         `${appRoot.path}/.storybook/config.js`,
         storybookConfigTemplate,
         true,
       ),
-    )
-    actions.push(
       addAction(
         `${appRoot.path}/.storybook/webpack.config.js`,
         storybookWebpackConfigTemplate,
         true,
       ),
-    )
+    ]
     if (!isSemicolons) {
-      actions.push(
+      actions = [
+        ...actions,
         modifyAction(
           `${cwd}/{{snakeCase name}}/__test__/{{snakeCase name}}.story.${jsExt}`,
           /;\n/g,
           '\n',
         ),
-      )
+      ]
     }
   }
+  return actions
 }
 
 const generateComponentActions = (
@@ -108,15 +112,17 @@ const generateComponentActions = (
   isStorybook,
   isSemicolons,
 ) => {
-  const actions = generateBaseFiles(cwd, jsExt, ssExt, type, isSemicolons)
-  addTestFiles(actions, cwd, isJest, isStorybook, jsExt, isSemicolons)
+  const actions = [
+    ...generateBaseFiles(cwd, jsExt, ssExt, type, isSemicolons),
+    ...generateTestFiles(cwd, isJest, isStorybook, jsExt, isSemicolons),
+  ]
   return actions
 }
 
 module.exports = {
   generateComponentActions,
   generateBaseFiles,
-  addTestFiles,
+  generateTestFiles,
   addAction,
   modifyAction,
 }
