@@ -1,6 +1,6 @@
 {
   "name": "react-generator",
-  "version": "0.0.9",
+  "version": "0.0.8",
   "description": "Creating a React Plop file.",
   "main": "dist/plopfile.js",
   "scripts": {
