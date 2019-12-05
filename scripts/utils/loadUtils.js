@@ -11,14 +11,6 @@ const loadPackages = () => {
   }
 }
 
-const loadReactPreferences = () => {
-  try {
-    return JSON.parse(fs.readFileSync(`${appRoot.path}/react.preferences.json`, 'utf8'))
-  } catch (e) {
-    return null
-  }
-}
-
 const loadEslint = () => {
   try {
     return JSON.parse(fs.readFileSync(`${appRoot.path}/.eslintrc.json`, 'utf8'))
@@ -44,14 +36,14 @@ const checkIsJestInstalled = (dependencies) => Object.keys(dependencies)
 
 const checkIsJsx = ({ rules }) => Object.keys(rules)
   .some((rule) => rule === 'react/jsx-filename-extension')
-  && rules['react/jsx-filename-extension'][1].extensions.indexOf('jsx')
+  && (rules['react/jsx-filename-extension'][1].extensions.indexOf('jsx') > -1)
 
-const checkIsSemicolon = (({ rules }) => !Object.keys(rules)
+const checkIsSemicolon = (({ rules }) => Object.keys(rules)
   .some((rule) => rule === 'semi')
   && rules.semi[0] === 2
   && rules.semi[1] === 'never')
 
-const loadSettings = (data = {}) => {
+const loadSettings = () => {
   const pkg = loadPackages()
   const eslintConfig = loadEslint()
   const {
@@ -63,14 +55,15 @@ const loadSettings = (data = {}) => {
     ...dependencies,
   }
   /* eslint-disable no-param-reassign */
-  data.isTypescript = checkIsTypescript(allPackages)
-  data.isPostcss = checkIsPostcss(allPackages)
-  data.isStorybook = checkIsStorybook(allPackages)
-  data.isSass = checkIsSass(allPackages)
-  data.isJest = checkIsJestInstalled(allPackages)
-  data.isJsx = eslintConfig && checkIsJsx(eslintConfig)
-  data.isSemicolons = eslintConfig && checkIsSemicolon(eslintConfig)
-  return data
+  const settings = {}
+  settings.isTypescript = checkIsTypescript(allPackages)
+  settings.isPostcss = checkIsPostcss(allPackages)
+  settings.isStorybook = checkIsStorybook(allPackages)
+  settings.isSass = checkIsSass(allPackages)
+  settings.isJest = checkIsJestInstalled(allPackages)
+  settings.isJsx = eslintConfig && checkIsJsx(eslintConfig)
+  settings.isSemicolons = eslintConfig && checkIsSemicolon(eslintConfig)
+  return settings
 }
 
 module.exports = {
@@ -80,8 +73,9 @@ module.exports = {
   checkIsStorybook,
   checkIsSass,
   checkIsJestInstalled,
+  checkIsJsx,
+  checkIsSemicolon,
   loadPackages,
-  loadReactPreferences,
   loadEslint,
 }
 
