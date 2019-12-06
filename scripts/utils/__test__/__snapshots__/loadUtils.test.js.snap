@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loadEslint 1`] = `
+Object {
+  "rules": Array [],
+}
+`;
+
+exports[`loadPackages 1`] = `
+Object {
+  "dependencies": Object {},
+  "devDependencies": Object {},
+}
+`;
+
+exports[`loadSettings 1`] = `
+Object {
+  "isJest": false,
+  "isJsx": false,
+  "isPostcss": false,
+  "isSass": false,
+  "isSemicolons": true,
+  "isStorybook": false,
+  "isTypescript": false,
+}
+`;

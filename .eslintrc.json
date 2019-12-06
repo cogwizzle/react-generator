@@ -10,7 +10,8 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
     "it": "readonly",
-    "expect": "readonly"
+    "expect": "readonly",
+    "jest": "readonly"
   },
   "parserOptions": {
     "ecmaVersion": 2018,
