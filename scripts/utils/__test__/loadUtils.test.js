@@ -31,16 +31,17 @@ const {
   checkIsJestInstalled,
   checkIsJsx,
   checkIsSemicolon,
+  applySettings,
 } = require('../loadUtils')
 
 
 
-it('loadSettings', () => {
+it('loadPackages', () => {
   const results = loadPackages()
   expect(results).toMatchSnapshot()
 })
 
-it('loadSettings failure', () => {
+it('loadPackages failure', () => {
   expect(() => loadPackages()).toThrow()
 })
 
@@ -128,16 +129,23 @@ it('checkIsSemicolon', () => {
     },
   }
   const results = checkIsSemicolon(fakeEslint)
-  expect(results).toBeTruthy()
+  expect(results).toBeFalsy()
 })
 
 it('checkIsSemicolon false', () => {
   const results = checkIsSemicolon({ rules: {} })
-  expect(results).toBeFalsy()
+  expect(results).toBeTruthy()
 })
 
 it('loadSettings', () => {
   const results = loadSettings()
   expect(results).toMatchSnapshot()
+})
+
+it('applySettings', () => {
+  const data = {}
+  const settings = { test: 'test' }
+  applySettings(data, settings)
+  expect(data).toEqual(settings)
 })
 

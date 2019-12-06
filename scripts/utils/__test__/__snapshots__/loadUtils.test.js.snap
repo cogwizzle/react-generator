@@ -6,20 +6,20 @@ Object {
 }
 `;
 
-exports[`loadSettings 1`] = `
+exports[`loadPackages 1`] = `
 Object {
   "dependencies": Object {},
   "devDependencies": Object {},
 }
 `;
 
-exports[`loadSettings 2`] = `
+exports[`loadSettings 1`] = `
 Object {
   "isJest": false,
   "isJsx": false,
   "isPostcss": false,
   "isSass": false,
-  "isSemicolons": false,
+  "isSemicolons": true,
   "isStorybook": false,
   "isTypescript": false,
 }

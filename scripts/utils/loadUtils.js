@@ -38,10 +38,14 @@ const checkIsJsx = ({ rules }) => Object.keys(rules)
   .some((rule) => rule === 'react/jsx-filename-extension')
   && (rules['react/jsx-filename-extension'][1].extensions.indexOf('jsx') > -1)
 
-const checkIsSemicolon = (({ rules }) => Object.keys(rules)
-  .some((rule) => rule === 'semi')
-  && rules.semi[0] === 2
-  && rules.semi[1] === 'never')
+const checkIsSemicolon = ({ rules }) => {
+  if (!Object.keys(rules).some((rule) => rule === 'semi')) {
+    return true
+  }
+
+  return (Object.keys(rules).some((rule) => rule === 'semi')
+    && rules.semi[1] !== 'never')
+}
 
 const loadSettings = () => {
   const pkg = loadPackages()
@@ -54,17 +58,20 @@ const loadSettings = () => {
     ...devDependencies,
     ...dependencies,
   }
-  /* eslint-disable no-param-reassign */
-  const settings = {}
-  settings.isTypescript = checkIsTypescript(allPackages)
-  settings.isPostcss = checkIsPostcss(allPackages)
-  settings.isStorybook = checkIsStorybook(allPackages)
-  settings.isSass = checkIsSass(allPackages)
-  settings.isJest = checkIsJestInstalled(allPackages)
-  settings.isJsx = eslintConfig && checkIsJsx(eslintConfig)
-  settings.isSemicolons = eslintConfig && checkIsSemicolon(eslintConfig)
-  return settings
+  return {
+    isTypescript: checkIsTypescript(allPackages),
+    isPostcss: checkIsPostcss(allPackages),
+    isStorybook: checkIsStorybook(allPackages),
+    isSass: checkIsSass(allPackages),
+    isJest: checkIsJestInstalled(allPackages),
+    isJsx: eslintConfig && checkIsJsx(eslintConfig),
+    isSemicolons: eslintConfig && checkIsSemicolon(eslintConfig),
+  }
 }
+
+const applySettings = (data, settings) => Object.keys(settings)
+  /* eslint-disable-next-line no-param-reassign */
+  .forEach((prop) => { data[prop] = settings[prop] })
 
 module.exports = {
   loadSettings,
@@ -77,5 +84,6 @@ module.exports = {
   checkIsSemicolon,
   loadPackages,
   loadEslint,
+  applySettings,
 }
 

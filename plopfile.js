@@ -1,5 +1,8 @@
 /* eslint-disable no-param-reassign */
-const { loadSettings } = require('./scripts/utils/loadUtils.js')
+const {
+  loadSettings,
+  applySettings,
+} = require('./scripts/utils/loadUtils.js')
 const { getFileInfo } = require('./scripts/utils/fileStructureUtils.js')
 const { generateComponentActions } = require('./scripts/utils/actionUtils.js')
 const { getDefaultPrompts } = require('./scripts/utils/promptUtils.js')
@@ -18,7 +21,7 @@ module.exports = (plop) => {
     description: 'Create a functional react component',
     prompts: componentPrompts,
     actions(data) {
-      loadSettings(data)
+      applySettings(data, settings)
       data.styleType = settings.isSass ? 'sass' : 'css'
       const [
         path,
@@ -36,9 +39,9 @@ module.exports = (plop) => {
         cwd,
         jsExt,
         ssExt,
-        data.isJest,
-        data.isStorybook,
-        data.isSemicolons,
+        settings.isJest,
+        settings.isStorybook,
+        settings.isSemicolons,
       )
 
       return actions
@@ -49,7 +52,7 @@ module.exports = (plop) => {
     description: 'Create a class based react component',
     prompts: componentPrompts,
     actions(data) {
-      loadSettings(data)
+      applySettings(data, settings)
       data.styleType = settings.isSass ? 'sass' : 'css'
       const [
         path,
@@ -67,9 +70,9 @@ module.exports = (plop) => {
         cwd,
         jsExt,
         ssExt,
-        data.isJest,
-        data.isStorybook,
-        data.isSemicolons,
+        settings.isJest,
+        settings.isStorybook,
+        settings.isSemicolons,
       )
 
       return actions
