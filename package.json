@@ -1,6 +1,6 @@
 {
   "name": "react-generator",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Creating a React Plop file.",
   "main": "dist/plopfile.js",
   "scripts": {
@@ -42,6 +42,7 @@
   "dependencies": {
     "app-root-path": "^3.0.0",
     "fs": "^0.0.1-security",
-    "plop": "^2.5.3"
+    "plop": "^2.5.3",
+    "serialize-javascript": "2.1.1"
   }
 }
