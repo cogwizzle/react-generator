@@ -2,3 +2,4 @@ node_modules/
 **/*.swp
 src/components/
 react.preferences.json
+yarn-error.log
