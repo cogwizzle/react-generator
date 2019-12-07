@@ -5,17 +5,14 @@ const {
 } = require('./scripts/utils/loadUtils.js')
 const { getFileInfo } = require('./scripts/utils/fileStructureUtils.js')
 const { generateComponentActions } = require('./scripts/utils/actionUtils.js')
-const { getDefaultPrompts } = require('./scripts/utils/promptUtils.js')
+const { prompt } = require('./scripts/utils/promptUtils.js')
 
 const settings = loadSettings()
 
 module.exports = (plop) => {
-  const hasReactPreference = Object.keys(settings)
-    .some((setting) => setting === 'isSemicolons')
-  const componentPrompts = getDefaultPrompts(
-    hasReactPreference,
-    settings.isTypescript,
-  )
+  const componentPrompts = [
+    prompt('input', 'name', 'What is the name of the component?'),
+  ]
 
   plop.setGenerator('component', {
     description: 'Create a functional react component',
