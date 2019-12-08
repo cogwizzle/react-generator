@@ -66,11 +66,11 @@ it('extractPathAndComponentName with path', () => {
 
 it('getFileInfo', () => {
   const results = getFileInfo('hello_world', true, false, 'postcss')
-  expect(results).toEqual([
-    'src/components/',
-    'hello_world',
-    'tsx',
-    'css',
-  ])
+  expect(results).toEqual({
+    path: 'src/components/',
+    componentName: 'hello_world',
+    jsExtension: 'tsx',
+    styleExtension: 'css',
+  })
 })
 

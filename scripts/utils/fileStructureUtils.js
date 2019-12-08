@@ -35,12 +35,15 @@ const extractPathAndComponentName = (componentName) => {
   return [generatePathWithPrefix(''), componentName]
 }
 
-const getFileInfo = (name, isTypescript, isJsx, styleType) => [
-  ...extractPathAndComponentName(name),
-  getJsFileExtension(isTypescript, isJsx),
-  getStyleSheetExtension(styleType),
-] // Returns [path, name, jsExt, ssExt]
-
+const getFileInfo = (name, isTypescript, isJsx, styleType) => {
+  const [path, componentName] = extractPathAndComponentName(name)
+  return {
+    componentName,
+    path,
+    jsExtension: getJsFileExtension(isTypescript, isJsx),
+    styleExtension: getStyleSheetExtension(styleType),
+  }
+}
 
 module.exports = {
   getJsFileExtension,
