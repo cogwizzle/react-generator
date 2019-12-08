@@ -65,7 +65,11 @@ it('extractPathAndComponentName with path', () => {
 })
 
 it('getFileInfo', () => {
-  const results = getFileInfo('hello_world', true, false, 'postcss')
+  const results = getFileInfo('hello_world', {
+    isTypescript: true,
+    isSass: false,
+    isJsx: false,
+  })
   expect(results).toEqual({
     path: 'src/components/',
     componentName: 'hello_world',
