@@ -42,7 +42,7 @@ npm run generate
 ```
 Yarn
 ```bash
-yarn run generate
+yarn generate
 ```
 
 # Generating files - The basic flow of events
@@ -50,9 +50,7 @@ React Generator is going to generate files a bit differently depending on the li
 
 If you have the Jest framework installed it will also generate a test file for you with a simple render test inside of it.  Test files are always nested inside of a component's folder under __test__.
 
-If you are using Storybook it will also generate a storybook file for your new component.   If a storybook configuration doesn't exists in your project a custom storybook configuration that will actively seek the Storybook files in your project and sort them alphabetically will be created.
-
-Finally the React Generator will ask you a series of questions about how you prefer to write JavaScript and it will offer to save those answers so you don't get asked every single time you run the generator.
+If you are using Storybook it will also generate a storybook file for your new component.   If a storybook configuration doesn't exists in your project a custom storybook configuration that will actively seek the Storybook files in your project and sort them alphabetically will be created.  Storybook story files are generated on at the component level under the components __test__ file.
 
 # Supported Features
 | Feature Name   | Description                                                                                                                                                       |
@@ -62,6 +60,5 @@ Finally the React Generator will ask you a series of questions about how you pre
 | Sass           | Supports SASS files on component generation if node-sass is installed.                                                                                            |
 | PostCSS        | Supports PostCSS files on component generation if PostCSS is installed.                                                                                           |
 | Storybook      | Based on if Storybook is installed it will generate storybook files with your components.  It will also generate a storybook config if one doesn't already exits. |
-| JSX preference | Prompts and saves preferences on whether or not you want to use JSX file extensions.  (N/A if Typescript)                                                         |
-| Semicolons     | Prompts and saves preferences on whether or not the user prefers to use semicolons in their JavaScript file.                                                      |
-| Save           | Prompts the user to save the previously given preferences.                                                                                                        |
+| JSX preference | Reads your eslintrc.json file for configuration settings.
+| Semicolons     | Reads your eslintrc.json file for configuration settings.
