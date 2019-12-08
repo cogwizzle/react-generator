@@ -20,12 +20,12 @@ module.exports = (plop) => {
     actions(data) {
       applySettings(data, settings)
       data.styleType = settings.isSass ? 'sass' : 'css'
-      const [
+      const {
         path,
         componentName,
-        jsExt,
-        ssExt,
-      ] = getFileInfo(data.name, data.isTypescript, data.isJsx, data.styleType)
+        jsExtension: jsExt,
+        styleExtension: ssExt,
+      } = getFileInfo(data.name, data.isTypescript, data.isJsx, data.styleType)
       data.name = componentName
       data.styleSheetExtension = ssExt
 
@@ -51,12 +51,12 @@ module.exports = (plop) => {
     actions(data) {
       applySettings(data, settings)
       data.styleType = settings.isSass ? 'sass' : 'css'
-      const [
+      const {
         path,
         componentName,
-        jsExt,
-        ssExt,
-      ] = getFileInfo(data.name, data.isTypescript, data.isJsx, data.styleType)
+        jsExtension: jsExt,
+        styleExtension: ssExt,
+      } = getFileInfo(data.name, data.isTypescript, data.isJsx, data.styleType)
       data.name = componentName
       data.styleSheetExtension = ssExt
 
