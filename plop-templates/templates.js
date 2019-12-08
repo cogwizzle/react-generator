@@ -7,5 +7,7 @@ module.exports = {
   componentTestTemplate: require('./component.test.hbs').default,
   storybookConfigTemplate: require('./storybook.config.hbs').default,
   storybookWebpackConfigTemplate: require('./storybook.webpack.hbs').default,
+  hookRequestTemplate: require('./request.hook.hbs').default,
+  hookRequestTestTemplate: require('./request.hook.test.hbs').default,
 }
 

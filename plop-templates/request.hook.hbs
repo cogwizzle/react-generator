@@ -1,0 +1,21 @@
+import {{#isTypescript}} * as {{/isTypescript}}React from 'react';
+import { useState, useEffect } from 'react';
+
+const request{{pascalCase name}} = () => {
+  const url = '{{url}}';
+  const [{{camelCase name}}, set{{pascalCase name}}] = useState(undefined);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(url);
+      const json = await response.json();
+      set{{pascalCase name}}(json);
+    }
+    fetchData();
+  }, [url]);
+
+  return {{camelCase name}};
+};
+
+export default request{{pascalCase name}};
+
