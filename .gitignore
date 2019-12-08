@@ -3,3 +3,5 @@ node_modules/
 src/components/
 react.preferences.json
 yarn-error.log
+coverage/
+
