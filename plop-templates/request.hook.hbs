@@ -1,15 +1,16 @@
-import {{#isTypescript}} * as {{/isTypescript}}React from 'react';
+{{#isTypescript}}import * as React from 'react';
 import { useState, useEffect } from 'react';
+{{else}}import React, { useState, useEffect } from 'react';{{/isTypescript}}
 
-const request{{pascalCase name}} = () => {
-  const url = '{{url}}';
-  const [{{camelCase name}}, set{{pascalCase name}}] = useState(undefined);
+const useRequest{{pascalCase name}} = (){{#isTypescript}}: any | undefined{{/isTypescript}} => {
+  const url{{#isTypescript}}: string{{/isTypescript}} = '{{url}}';
+  const [{{camelCase name}}, set{{pascalCase name}}] = useState{{#isTypescript}}<any | undefined>{{/isTypescript}}(undefined);
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(url);
-      const json = await response.json();
-      set{{pascalCase name}}(json);
+    function fetchData(){{#isTypescript}}: void{{/isTypescript}} {
+      fetch(url)
+        .then((response) => resposne.json())
+        .then((json) => set{{pascalCase name}}(json));
     }
     fetchData();
   }, [url]);
@@ -17,5 +18,5 @@ const request{{pascalCase name}} = () => {
   return {{camelCase name}};
 };
 
-export default request{{pascalCase name}};
+export default useRequest{{pascalCase name}};
 
