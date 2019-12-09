@@ -97,7 +97,7 @@ module.exports = (plop) => {
       const jsExt = getJsFileExtension(settings.isTypescript, settings.isJsx)
       let actions = [
         addAction(
-          `${appRoot.path}/src/hooks/{{snakeCase name}}.${jsExt}`,
+          `${appRoot.path}/src/hooks/use-request-{{snakeCase name}}.${jsExt}`,
           hookRequestTemplate,
         ),
       ]
@@ -106,7 +106,7 @@ module.exports = (plop) => {
         actions = [
           ...actions,
           modifyAction(
-            `${appRoot.path}/src/hooks/{{snakeCase name}}.${jsExt}`,
+            `${appRoot.path}/src/hooks/use-request-{{snakeCase name}}.${jsExt}`,
             /;\n/g,
             '\n',
           ),
@@ -117,7 +117,7 @@ module.exports = (plop) => {
         actions = [
           ...actions,
           addAction(
-            `${appRoot.path}/src/hooks/__test__/{{snakeCase name}}.test.${jsExt}`,
+            `${appRoot.path}/src/hooks/__test__/use-request-{{snakeCase name}}.test.${jsExt}`,
             hookRequestTestTemplate,
           ),
         ]
@@ -127,7 +127,7 @@ module.exports = (plop) => {
           actions = [
             ...actions,
             modifyAction(
-              `${appRoot.path}/src/hooks/__test__/{{snakeCase name}}.test.${jsExt}`,
+              `${appRoot.path}/src/hooks/__test__/use-request-{{snakeCase name}}.test.${jsExt}`,
               /;\n/g,
               '\n',
             ),

@@ -13,20 +13,33 @@ const reactMock = jest.mock('react', () => {
     }),
   };
 });
+const globalAny{{#isTypescript}}: any{{/isTypescript}} = global;
 
 /* eslint-disable-next-line no-unused-vars */
-jest.mock('fetch', () => (url: string) => new Promise((resolve) => {
-  resolve([]);
-}));
-import request{{pascalCase name}} from '../{{snakeCase name}}';
+import useRequest{{pascalCase name}}, { fetchData } from '../use-request-{{snakeCase name}}';
+
+it('fetch data', () => {
+  expect.assertions(1)
+  globalAny.fetch = jest.fn().mockImplementationOnce((url) => new Promise(
+    (resolve) => resolve(
+      { json: () => [] }
+    )
+  ));
+  let value = undefined;
+  const setValue = (val) => { value = val };
+  const promise = fetchData('test', setValue)
+    .then(() => {
+      expect(value).toEqual([]);
+    });
+});
 
 it('request {{snakeCase name}}', () => {
-  expect.assertions(3);
-  const results{{#isTypescript}}: Promise<any[]>{{/isTypescript}} = request{{pascalCase name}}();
-  results.then((response{{#isTypescript}}: any[]{{/isTypescript}}) => {
-    expect(response).toEqual([]);
-  }
-  expect(reactMock.useState).toHaveBeenCalled();
-  expect(reactMock.useEffect).toHaveBeenCalled();
+  globalAny.fetch = jest.fn().mockImplementationOnce((url) => new Promise(
+    (resolve) => resolve(
+      { json: () => [] }
+    )
+  ));
+  const results: any[] | undefined = useRequest{{pascalCase name}}();
+  expect(results).toBeFalsy();
 });
 
