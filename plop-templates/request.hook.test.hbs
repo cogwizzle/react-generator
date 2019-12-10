@@ -39,7 +39,7 @@ it('request {{snakeCase name}}', () => {
       { json: () => [] }
     )
   ));
-  const results: any[] | undefined = useRequest{{pascalCase name}}();
+  const results{{#isTypescript}}: any[] | undefined{{/isTypescript}} = useRequest{{pascalCase name}}();
   expect(results).toBeFalsy();
 });
 
