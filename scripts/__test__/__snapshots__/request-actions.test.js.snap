@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`no semi, jest 1`] = `
+Array [
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/use-request-{{snakeCase name}}.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/use-request-{{snakeCase name}}.js",
+    "pattern": /;\\\\n/g,
+    "template": "
+",
+    "type": "modify",
+  },
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/__test__/use-request-{{snakeCase name}}.test.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/__test__/use-request-{{snakeCase name}}.test.js",
+    "pattern": /;\\\\n/g,
+    "template": "
+",
+    "type": "modify",
+  },
+]
+`;
+
+exports[`no semi, no jest 1`] = `
+Array [
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/use-request-{{snakeCase name}}.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/use-request-{{snakeCase name}}.js",
+    "pattern": /;\\\\n/g,
+    "template": "
+",
+    "type": "modify",
+  },
+]
+`;
+
+exports[`semi, jest 1`] = `
+Array [
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/use-request-{{snakeCase name}}.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/__test__/use-request-{{snakeCase name}}.test.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+]
+`;
+
+exports[`semi, no jest 1`] = `
+Array [
+  Object {
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/use-request-{{snakeCase name}}.js",
+    "skipIfExists": false,
+    "template": undefined,
+    "type": "add",
+  },
+]
+`;

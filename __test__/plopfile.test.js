@@ -13,7 +13,7 @@ it('plop', () => {
   }
 
   use(plopMock)
-  expect(plopMock.setGenerator).toHaveBeenCalledTimes(2)
+  expect(plopMock.setGenerator).toHaveBeenCalledTimes(3)
 })
 
 it('plop action', () => {

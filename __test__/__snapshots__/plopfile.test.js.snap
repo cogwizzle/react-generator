@@ -3,19 +3,13 @@
 exports[`plop action 1`] = `
 Array [
   Object {
-    "path": "/home/jfehrman/Development/react-generator/src/components//{{snakeCase name}}/{{snakeCase name}}.js",
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/use-request-{{snakeCase name}}.js",
     "skipIfExists": false,
     "template": undefined,
     "type": "add",
   },
   Object {
-    "path": "/home/jfehrman/Development/react-generator/src/components//{{snakeCase name}}/{{snakeCase name}}.scss",
-    "skipIfExists": false,
-    "template": undefined,
-    "type": "add",
-  },
-  Object {
-    "path": "/home/jfehrman/Development/react-generator/src/components//{{snakeCase name}}/{{snakeCase name}}.js",
+    "path": "/home/jfehrman/Development/react-generator/src/hooks/use-request-{{snakeCase name}}.js",
     "pattern": /;\\\\n/g,
     "template": "
 ",

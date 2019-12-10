@@ -1,0 +1,45 @@
+/* eslint-disable import/first */
+const reactMock = jest.mock('react', () => {
+  let value;
+  return {
+    useState: jest.fn(() => [
+      value,
+      (val) => {
+        value = val;
+      },
+    ]),
+    useEffect: jest.fn((func) => {
+      func();
+    }),
+  };
+});
+const globalAny{{#isTypescript}}: any{{/isTypescript}} = global;
+
+/* eslint-disable-next-line no-unused-vars */
+import useRequest{{pascalCase name}}, { fetchData } from '../use-request-{{snakeCase name}}';
+
+it('fetch data', () => {
+  expect.assertions(1)
+  globalAny.fetch = jest.fn().mockImplementationOnce((url) => new Promise(
+    (resolve) => resolve(
+      { json: () => [] }
+    )
+  ));
+  let value = undefined;
+  const setValue = (val) => { value = val };
+  const promise = fetchData('test', setValue)
+    .then(() => {
+      expect(value).toEqual([]);
+    });
+});
+
+it('request {{snakeCase name}}', () => {
+  globalAny.fetch = jest.fn().mockImplementationOnce((url) => new Promise(
+    (resolve) => resolve(
+      { json: () => [] }
+    )
+  ));
+  const results{{#isTypescript}}: any[] | undefined{{/isTypescript}} = useRequest{{pascalCase name}}();
+  expect(results).toBeFalsy();
+});
+

@@ -3,9 +3,15 @@ const {
   loadSettings,
   applySettings,
 } = require('./scripts/utils/loadUtils.js')
-const { getFileInfo } = require('./scripts/utils/fileStructureUtils.js')
-const { generateComponentActions } = require('./scripts/utils/actionUtils.js')
+const {
+  getFileInfo,
+  getJsFileExtension,
+} = require('./scripts/utils/fileStructureUtils.js')
+const {
+  generateComponentActions,
+} = require('./scripts/utils/actionUtils.js')
 const { prompt } = require('./scripts/utils/promptUtils.js')
+const { generateRequestHookActions } = require('./scripts/request-hook-actions')
 
 const settings = loadSettings()
 
@@ -71,6 +77,19 @@ module.exports = (plop) => {
       )
 
       return actions
+    },
+  })
+
+  plop.setGenerator('request hook', {
+    description: 'Create a hook that request data from a resource.',
+    prompts: [
+      prompt('input', 'name', 'What is the name of the data being requested?'),
+      prompt('input', 'url', 'What is the url of the resource?'),
+    ],
+    actions(data) {
+      applySettings(data, settings)
+      const jsExt = getJsFileExtension(settings.isTypescript, settings.isJsx)
+      return generateRequestHookActions(settings, jsExt)
     },
   })
 }
