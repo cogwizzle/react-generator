@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-const appRoot = require('app-root-path')
 const {
   loadSettings,
   applySettings,
@@ -10,14 +9,9 @@ const {
 } = require('./scripts/utils/fileStructureUtils.js')
 const {
   generateComponentActions,
-  addAction,
-  modifyAction,
 } = require('./scripts/utils/actionUtils.js')
-const {
-  hookRequestTemplate,
-  hookRequestTestTemplate,
-} = require('./plop-templates/templates')
 const { prompt } = require('./scripts/utils/promptUtils.js')
+const { generateRequestHookActions } = require('./scripts/request-hook-actions')
 
 const settings = loadSettings()
 
@@ -95,47 +89,7 @@ module.exports = (plop) => {
     actions(data) {
       applySettings(data, settings)
       const jsExt = getJsFileExtension(settings.isTypescript, settings.isJsx)
-      let actions = [
-        addAction(
-          `${appRoot.path}/src/hooks/use-request-{{snakeCase name}}.${jsExt}`,
-          hookRequestTemplate,
-        ),
-      ]
-
-      if (!settings.isSemicolons) {
-        actions = [
-          ...actions,
-          modifyAction(
-            `${appRoot.path}/src/hooks/use-request-{{snakeCase name}}.${jsExt}`,
-            /;\n/g,
-            '\n',
-          ),
-        ]
-      }
-
-      if (settings.isJest) {
-        actions = [
-          ...actions,
-          addAction(
-            `${appRoot.path}/src/hooks/__test__/use-request-{{snakeCase name}}.test.${jsExt}`,
-            hookRequestTestTemplate,
-          ),
-        ]
-
-
-        if (!settings.isSemicolons) {
-          actions = [
-            ...actions,
-            modifyAction(
-              `${appRoot.path}/src/hooks/__test__/use-request-{{snakeCase name}}.test.${jsExt}`,
-              /;\n/g,
-              '\n',
-            ),
-          ]
-        }
-      }
-
-      return actions
+      return generateRequestHookActions(settings, jsExt)
     },
   })
 }
