@@ -33,7 +33,7 @@ it('fetch data', () => {
   const setError = (message) => { error = message };
   const promise = fetchData('test', setValue, setLoading, setError)
     .then(() => {
-      expect([value, loading, error]).toEqual([[], true, undefined]);
+      expect([value, loading, error]).toEqual([[], false, undefined]);
     });
 });
 
@@ -50,7 +50,7 @@ it('fetch data error', () => {
   const setError = (message) => { error = message };
   const promise = fetchData('test', setValue, setLoading, setError)
     .then(() => {
-      expect([value, loading, error]).toEqual([undefined, true, 'unexpected error']);
+      expect([value, loading, error]).toEqual([undefined, false, 'unexpected error']);
     });
 });
 
