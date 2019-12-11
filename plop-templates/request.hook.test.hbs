@@ -26,10 +26,31 @@ it('fetch data', () => {
     )
   ));
   let value = undefined;
+  let loading = false;
+  let error = undefined;
   const setValue = (val) => { value = val };
-  const promise = fetchData('test', setValue)
+  const setLoading = (val) => { loading = val };
+  const setError = (message) => { error = message };
+  const promise = fetchData('test', setValue, setLoading, setError)
     .then(() => {
-      expect(value).toEqual([]);
+      expect([value, loading, error]).toEqual([[], true, undefined]);
+    });
+});
+
+it('fetch data error', () => {
+  expect.assertions(1)
+  globalAny.fetch = jest.fn().mockImplementationOnce((url) => new Promise(
+    (resolve, reject) => reject(new Error('unexpected error'))
+  ));
+  let value = undefined;
+  let loading = false;
+  let error = undefined;
+  const setValue = (val) => { value = val };
+  const setLoading = (val) => { loading = val };
+  const setError = (message) => { error = message };
+  const promise = fetchData('test', setValue, setLoading, setError)
+    .then(() => {
+      expect([value, loading, error]).toEqual([undefined, true, 'unexpected error']);
     });
 });
 
@@ -40,6 +61,6 @@ it('request {{snakeCase name}}', () => {
     )
   ));
   const results{{#isTypescript}}: any[] | undefined{{/isTypescript}} = useRequest{{pascalCase name}}();
-  expect(results).toBeFalsy();
+  expect(results.length).toBe(3);
 });
 
