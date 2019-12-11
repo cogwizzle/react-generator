@@ -2,19 +2,38 @@
 import { useState, useEffect } from 'react';
 {{else}}import React, { useState, useEffect } from 'react';
 {{/isTypescript}}
-export function fetchData(url, setValue) {
+export function fetchData(url, setValue, setLoading, setError) {
+  setLoading(true);
   return fetch(url)
     .then((response) => response.json())
-    .then((json) => setValue(json));
+    .then((json) => {
+      setLoading(false);
+      setValue(json);
+    })
+    .catch((error) => {
+      setLoading(false);
+      setError(error.message);
+    });
 }
 
 const useRequest{{pascalCase name}} = (){{#isTypescript}}: any | undefined{{/isTypescript}} => {
   const url{{#isTypescript}}: string{{/isTypescript}} = '{{url}}';
   const [{{camelCase name}}, set{{pascalCase name}}] = useState{{#isTypescript}}<any | undefined>{{/isTypescript}}(undefined);
+  const [{{camelCase name}}Loading, set{{pascalCase name}}Loading] = useState{{#isTypescript}}<boolean>{{/isTypescript}}(false);
+  const [{{camelCase name}}Error, set{{pascalCase name}}Error] = useState{{#isTypescript}}<string | undefined>{{/isTypescript}}(undefined);
 
-  useEffect(() => { fetchData(url, setTest) }, [url]);
+  useEffect(() => {
+    if (!{{camelCase name}}Loading) {
+      fetchData(
+        url,
+        set{{pascalCase name}},
+        set{{pascalCase name}}Loading,
+        set{{pascalCase name}}Error
+      );
+    }
+  }, [url]);
   
-  return {{camelCase name}};
+  return [{{camelCase name}}, {{camelCase name}}Loading, {{camelCase name}}Error];
 };
 
 export default useRequest{{pascalCase name}};
