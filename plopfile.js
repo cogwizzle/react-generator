@@ -33,6 +33,7 @@ module.exports = (plop) => {
       } = getFileInfo(data.name, settings)
       data.name = componentName
       data.styleSheetExtension = ssExt
+      data.jsExt = jsExt
 
       const cwd = `${process.cwd()}/${path}`
 
@@ -63,6 +64,7 @@ module.exports = (plop) => {
       } = getFileInfo(data.name, settings)
       data.name = componentName
       data.styleSheetExtension = ssExt
+      data.jsExt = jsExt
 
       const cwd = `${process.cwd()}/${path}`
 
