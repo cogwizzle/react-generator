@@ -64,6 +64,14 @@ it('extractPathAndComponentName with path', () => {
   ])
 })
 
+it('extractPathAndComponentName with longer path', () => {
+  const results = extractPathAndComponentName('hello_world/another_one/test')
+  expect(results).toEqual([
+    'src/components/hello_world/another_one',
+    'test',
+  ])
+})
+
 it('getFileInfo', () => {
   const results = getFileInfo('hello_world', {
     isTypescript: true,

@@ -29,7 +29,11 @@ const generatePathWithPrefix = (path) => {
 
 const extractPathAndComponentName = (componentName) => {
   if (componentName.indexOf('/') > -1) {
-    const [path, name] = componentName.split('/', -1)
+    const index = componentName.lastIndexOf('/')
+    const [path, name] = [
+      componentName.slice(0, index),
+      componentName.slice(index + 1, componentName.length),
+    ]
     return [generatePathWithPrefix(path), name]
   }
   return [generatePathWithPrefix(''), componentName]
