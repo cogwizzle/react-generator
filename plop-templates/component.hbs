@@ -2,12 +2,12 @@ import{{#isTypescript}} * as{{/isTypescript}} React from 'react';
 import './{{snakeCase name}}.{{styleSheetExtension}}';
 
 {{#isTypescript}}
-interface i{{pascalCase name}}Props {
+interface {{pascalCase name}}Props {
 
 }
 
 {{/isTypescript}}
-const {{pascalCase name}}{{#isTypescript}}: React.FunctionComponent<i{{pascalCase name}}Props>{{/isTypescript}} = () => {
+const {{pascalCase name}}{{#isTypescript}}: React.FunctionComponent<{{pascalCase name}}Props>{{/isTypescript}} = () => {
   // State
 
   // Effects
@@ -19,8 +19,7 @@ const {{pascalCase name}}{{#isTypescript}}: React.FunctionComponent<i{{pascalCas
   );
 };
 
-export default {{pascalCase name}};
-{{#isTypescript}}
-export { i{{pascalCase name}}Props };
+export default {{pascalCase name}};{{#isTypescript}}
+export { {{pascalCase name}}Props };
 {{/isTypescript}}
 
