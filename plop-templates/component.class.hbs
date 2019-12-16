@@ -2,17 +2,17 @@ import{{#isTypescript}} * as{{/isTypescript}} React, { Component } from 'react';
 import './{{snakeCase name}}.{{styleSheetExtension}}';
 
 {{#isTypescript}}
-interface i{{pascalCase name}}Props {
+interface {{pascalCase name}}Props {
 
 }
 
-interface i{{pascalCase name}}State {
+interface {{pascalCase name}}State {
 
 }
 
 {{/isTypescript}}
-export default class {{pascalCase name}} extends Component{{#isTypescript}}<i{{pascalCase name}}Props, i{{pascalCase name}}State>{{/isTypescript}} {
-  constructor(props{{#isTypescript}}: i{{pascalCase name}}Props{{/isTypescript}}) {
+export default class {{pascalCase name}} extends Component{{#isTypescript}}<{{pascalCase name}}Props, {{pascalCase name}}State>{{/isTypescript}} {
+  constructor(props{{#isTypescript}}: {{pascalCase name}}Props{{/isTypescript}}) {
     super(props);
   }
 
@@ -27,8 +27,8 @@ export default class {{pascalCase name}} extends Component{{#isTypescript}}<i{{p
 
 {{#isTypescript}}
 export {
-  i{{pascalCase name}}Props,
-  i{{pascalCase name}}State,
+  {{pascalCase name}}Props,
+  {{pascalCase name}}State,
 };
 
 {{/isTypescript}}
