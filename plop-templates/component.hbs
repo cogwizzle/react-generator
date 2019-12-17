@@ -2,7 +2,7 @@ import{{#isTypescript}} * as{{/isTypescript}} React from 'react';
 import './{{snakeCase name}}.{{styleSheetExtension}}';
 
 {{#isTypescript}}
-interface {{pascalCase name}}Props {
+export interface {{pascalCase name}}Props {
 
 }
 
@@ -19,7 +19,5 @@ const {{pascalCase name}}{{#isTypescript}}: React.FunctionComponent<{{pascalCase
   );
 };
 
-export default {{pascalCase name}};{{#isTypescript}}
-export { {{pascalCase name}}Props };
-{{/isTypescript}}
+export default {{pascalCase name}};
 

@@ -2,11 +2,11 @@ import{{#isTypescript}} * as{{/isTypescript}} React, { Component } from 'react';
 import './{{snakeCase name}}.{{styleSheetExtension}}';
 
 {{#isTypescript}}
-interface {{pascalCase name}}Props {
+export interface {{pascalCase name}}Props {
 
 }
 
-interface {{pascalCase name}}State {
+export interface {{pascalCase name}}State {
 
 }
 
@@ -25,10 +25,3 @@ export default class {{pascalCase name}} extends Component{{#isTypescript}}<{{pa
   }
 }
 
-{{#isTypescript}}
-export {
-  {{pascalCase name}}Props,
-  {{pascalCase name}}State,
-};
-
-{{/isTypescript}}
